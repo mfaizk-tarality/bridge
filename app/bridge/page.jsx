@@ -119,51 +119,37 @@ const Bridge = () => {
     userAddress: address,
   });
 
-  useEffect(() => {
-    if (formValue.fromNetwork.symbol == "TAN") {
-      switchChainAsync(
-        {
-          chainId: TANConfig.chainId,
-        },
-        {
-          onError: (err) =>
-            toast.error(
-              err.shortMessage || "Something went wrong while switching chain"
-            ),
-        }
-      );
-    } else {
-      switchChainAsync(
-        {
-          chainId: networkList?.[1]?.chainId,
-        },
-        {
-          onError: (err) =>
-            toast.error(
-              err.shortMessage || "Something went wrong while switching chain"
-            ),
-        }
-      );
-    }
-  }, [formValue.fromNetwork]);
-
   const switchHandler = async () => {
-    try {
-      setFormValue((p) => {
-        return {
-          ...p,
-          fromNetwork: p.toNetwork,
-          toNetwork: p.fromNetwork,
-          toToken: p.fromToken,
-          fromToken: p.toToken,
-        };
-      });
-      setBtnText((p) => {
-        return "Transact" == p ? "Burn" : "Transact";
-      });
-    } catch (error) {
-      console.log(error, "switchError");
-    }
+    switchChainAsync(
+      {
+        chainId:
+          formValue.fromNetwork.symbol != "TAN"
+            ? TANConfig.chainId
+            : networkList?.[1]?.chainId,
+      },
+      {
+        onError: (err) =>
+          toast.error(
+            err.shortMessage || "Something went wrong while switching chain"
+          ),
+        onSuccess: dataExchange,
+      }
+    );
+  };
+
+  const dataExchange = () => {
+    setFormValue((p) => {
+      return {
+        ...p,
+        fromNetwork: p.toNetwork,
+        toNetwork: p.fromNetwork,
+        toToken: p.fromToken,
+        fromToken: p.toToken,
+      };
+    });
+    setBtnText((p) => {
+      return "Transact" == p ? "Burn" : "Transact";
+    });
   };
 
   const isValid = useMemo(() => {
