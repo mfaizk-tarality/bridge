@@ -358,7 +358,11 @@ const Bridge = () => {
                       value={formValue.fromAmount}
                       onChange={(e) => {
                         setFormValue((p) => {
-                          return { ...p, fromAmount: e.target.value };
+                          return {
+                            ...p,
+                            fromAmount: e.target.value,
+                            toAmount: e.target.value,
+                          };
                         });
                       }}
                     />
@@ -419,7 +423,7 @@ const Bridge = () => {
                     alt=""
                     className="h-6 object-contain"
                   />
-                  <p>{Number(formValue.toAmount ?? 0.0)}</p>
+                  <p>{formatNice(Number(formValue.toAmount ?? 0.0))}</p>
                 </div>
                 <div className="flex gap-2">
                   <p className="text-description">
