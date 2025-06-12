@@ -58,7 +58,7 @@ const BridgeTransaction = () => {
             )}
             {!bridgeHistoryLoading && bridgeHistory?.length == 0 && (
               <div className="min-h-56">
-                <NoDataFound text={"No Token Found."} />
+                <NoDataFound text={"No Data Found."} />
               </div>
             )}
             {!bridgeHistoryLoading && bridgeHistory?.length != 0 && (
