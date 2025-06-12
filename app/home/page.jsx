@@ -1,6 +1,7 @@
 "use client";
 import CustomButton from "@/common_component/CustomButton";
 import CustomDivider from "@/common_component/CustomDivider";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import {
   IconArrowBadgeDownFilled,
   IconBrandSlack,
@@ -57,21 +58,31 @@ const Home = () => {
           </label>
         </div>
       </div>
-      <div className="col-span-12 grid grid-cols-12 gap-8 my-10 ">
+      <div className="col-span-12 grid grid-cols-12 gap-8 my-10">
         {dappData?.map((item, idx) => {
           return (
             <div
+              className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 cursor-pointer"
               key={idx}
-              className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 border border-stroke min-h-96 flex items-center justify-evenly flex-col p-10 text-center rounded-2xl"
             >
-              <item.icon size={40} />
-              <h4>{item?.label}</h4>
-              <p>{item?.desc}</p>
-              <Link href={item.href || "#"}>
-                <CustomButton className={"rounded-sm min-w-40"}>
-                  {item?.btnText}
-                </CustomButton>
-              </Link>
+              <CardContainer className="">
+                <CardBody className="relative group/card  dark:hover:shadow-2xl dark:hover:shadow-tanborder/[0.1]  border border-stroke w-auto h-auto rounded-xl  ">
+                  <CardItem
+                    translateZ="50"
+                    key={idx}
+                    className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3   min-h-96 flex items-center justify-evenly flex-col p-10 text-center rounded-2xl"
+                  >
+                    <item.icon size={40} />
+                    <h4>{item?.label}</h4>
+                    <p>{item?.desc}</p>
+                    <Link href={item.href || "#"}>
+                      <CustomButton className={"rounded-sm min-w-40"}>
+                        {item?.btnText}
+                      </CustomButton>
+                    </Link>
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
             </div>
           );
         })}
@@ -111,7 +122,6 @@ const useDappData = (search) => {
         desc: "Transfer tokens across blockchains—enable cross-chain interoperability in a few clicks.",
         icon: IconArrowBadgeDownFilled,
         btnText: "Transact",
-        href: "/bridge",
       },
       {
         label: "Validator Pool",
